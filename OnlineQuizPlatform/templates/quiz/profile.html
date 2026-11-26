@@ -1,0 +1,66 @@
+{% extends "quiz/base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="hero">
+        <h1>Student Profile</h1>
+        <p>Your learning activity and quiz performance.</p>
+    </div>
+
+    <div class="card profile-info">
+        <h2>👤 {{ request.user.username }}</h2>
+        <p><strong>Email:</strong> {{ request.user.email|default:"Not provided" }}</p>
+        <p><strong>Joined:</strong> {{ request.user.date_joined|date:"d M Y" }}</p>
+    </div>
+
+    <div class="grid stats">
+        <div class="card">
+            <h3>Total Attempts</h3>
+            <h2>{{ total_attempts }}</h2>
+        </div>
+
+        <div class="card">
+            <h3>Highest Score</h3>
+            <h2>{{ highest_percentage }}%</h2>
+        </div>
+
+        <div class="card">
+            <h3>Average Score</h3>
+            <h2>{{ average_percentage }}%</h2>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Recent Quiz Attempts</h2>
+
+        {% if attempts %}
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Quiz Name</th>
+                            <th>Score</th>
+                            <th>Percentage</th>
+                            <th>Completed</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for attempt in attempts %}
+                        <tr>
+                            <td>{{ attempt.quiz.title }}</td>
+                            <td>{{ attempt.score }}/{{ attempt.total_questions }}</td>
+                            <td>{{ attempt.percentage }}%</td>
+                            <td>{{ attempt.completed_at|date:"d M Y, h:i A" }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p>You haven't attempted any quizzes yet.</p>
+            <a href="{% url 'dashboard' %}" class="btn">Explore Quizzes</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

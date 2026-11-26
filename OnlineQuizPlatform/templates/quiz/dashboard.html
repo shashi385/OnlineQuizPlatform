@@ -1,0 +1,29 @@
+{% extends 'quiz/base.html' %}
+{% block title %}Dashboard | QuizMaster{% endblock %}
+{% block content %}
+<section class="hero">
+  <div><p class="eyebrow">LEARN · PRACTICE · IMPROVE</p><h1>Your Quiz Dashboard</h1>
+  <p>Choose a quiz below and test your knowledge.</p></div>
+  <div class="hero-icon">Q</div>
+</section>
+<h2>Available Quizzes</h2>
+<div class="grid">
+  {% for quiz in quizzes %}
+  <article class="card">
+    <span class="tag">ACTIVE</span><h3>{{ quiz.title }}</h3>
+    <p class="muted">{{ quiz.description|default:"Test your knowledge with this quiz." }}</p>
+    <div class="meta"><span>{{ quiz.question_count }} questions</span><span>{{ quiz.duration_minutes }} min</span></div>
+    <a class="btn" href="{% url 'quiz_detail' quiz.id %}">View Quiz</a>
+  </article>
+  {% empty %}<div class="empty">No quizzes are available yet. Please check again later.</div>{% endfor %}
+</div>
+<h2 class="section-heading">Your Recent Results</h2>
+<div class="card table-wrap">
+<table><thead><tr><th>Quiz</th><th>Score</th><th>Percentage</th><th>Date</th></tr></thead>
+<tbody>
+{% for attempt in attempts %}
+<tr><td>{{ attempt.quiz.title }}</td><td>{{ attempt.score }}/{{ attempt.total_questions }}</td><td>{{ attempt.percentage }}%</td><td>{{ attempt.completed_at|date:"d M Y, H:i" }}</td></tr>
+{% empty %}<tr><td colspan="4">You have not completed a quiz yet.</td></tr>{% endfor %}
+</tbody></table>
+</div>
+{% endblock %}

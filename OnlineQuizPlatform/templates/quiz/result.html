@@ -1,0 +1,12 @@
+{% extends 'quiz/base.html' %}
+{% block title %}Quiz Result | QuizMaster{% endblock %}
+{% block content %}
+<section class="result-card">
+  <div class="result-check">✓</div><p class="eyebrow">QUIZ COMPLETED</p><h1>Your Result</h1>
+  <p class="muted">{{ attempt.quiz.title }}</p>
+  <div class="score">{{ attempt.score }} <span>/ {{ attempt.total_questions }}</span></div>
+  <h2>{{ attempt.percentage }}%</h2>
+  <p>{% if attempt.percentage >= 80 %}Excellent work! Keep it up.{% elif attempt.percentage >= 50 %}Good effort! Keep practising.{% else %}Keep learning and try again.{% endif %}</p>
+  <a class="btn" href="{% url 'dashboard' %}">Back to Dashboard</a>
+</section>
+{% endblock %}

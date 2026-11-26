@@ -1,0 +1,11 @@
+{% extends 'quiz/base.html' %}
+{% block title %}{{ quiz.title }} | QuizMaster{% endblock %}
+{% block content %}
+<section class="card detail-card">
+  <span class="tag">QUIZ DETAILS</span><h1>{{ quiz.title }}</h1>
+  <p class="muted">{{ quiz.description|default:"Complete this quiz and check your result instantly." }}</p>
+  <div class="stats"><div><strong>{{ quiz.question_count }}</strong><span>Questions</span></div><div><strong>{{ quiz.duration_minutes }}</strong><span>Minutes</span></div><div><strong>MCQ</strong><span>Question type</span></div></div>
+  <h3>Instructions</h3><ul><li>Choose one answer for each question.</li><li>Watch the countdown timer.</li><li>Submit your answers before the time ends.</li><li>Your score will be displayed after submission.</li></ul>
+  <form method="post" action="{% url 'start_quiz' quiz.id %}">{% csrf_token %}<button class="btn" type="submit">Start Quiz</button></form>
+</section>
+{% endblock %}

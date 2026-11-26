@@ -1,0 +1,14 @@
+{% extends 'quiz/base.html' %}
+{% block title %}Login | QuizMaster{% endblock %}
+{% block content %}
+<section class="auth-card">
+  <h1>Welcome back</h1><p class="muted">Login to continue to your dashboard.</p>
+  <form method="post">{% csrf_token %}
+    {% if form.errors %}<p class="error">Username or password is incorrect.</p>{% endif %}
+    {{ form.as_p }}
+    <input type="hidden" name="next" value="{{ next }}">
+    <button class="btn full" type="submit">Login</button>
+  </form>
+  <p class="muted">New student? <a href="{% url 'register' %}">Create account</a></p>
+</section>
+{% endblock %}
